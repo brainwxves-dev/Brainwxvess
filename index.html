@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BrainwXves</title>
+  
+  <!-- Mobile & PWA Meta Tags -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BrainwXves">
+  <meta name="theme-color" content="#0f172a">
+  <link id="dynamic-favicon" rel="icon" type="image/png" sizes="192x192" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+  <link id="dynamic-apple-icon" rel="apple-touch-icon" sizes="180x180" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+  <link id="pwa-manifest-link" rel="manifest" href="">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- html2pdf.js for PDF downloads -->
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+  <!-- Marked.js for Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    :root {
+      --app-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --accent-color: #10b981;
+      --accent-hover: #059669;
+      --accent-subtle: rgba(16, 185, 129, 0.15);
+      --accent-border: rgba(16, 185, 129, 0.35);
+      --app-text-color: #f8fafc;
+      --app-muted-color: #94a3b8;
+    }
+
+    body {
+      font-family: var(--app-font);
+      color: var(--app-text-color);
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .theme-accent-bg { background-color: var(--accent-color) !important; }
+    .theme-accent-bg:hover { background-color: var(--accent-hover) !important; }
+    .theme-accent-text { color: var(--accent-color) !important; }
+    .theme-accent-border { border-color: var(--accent-border) !important; }
+    .theme-accent-subtle-bg { background-color: var(--accent-subtle) !important; }
+    .theme-accent-ring { --tw-ring-color: var(--accent-color) !important; }
+    .theme-custom-text { color: var(--app-text-color) !important; }
+    .theme-custom-muted { color: var(--app-muted-color) !important; }
+
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.3); border-radius: 4px; }
+    
+    .wp-aurora { background: linear-gradient(135deg, #0f172a 0%, #064e3b 50%, #022c22 100%) !important; }
+    .wp-midnight { background: linear-gradient(135deg, #090d16 0%, #1e1b4b 50%, #0f172a 100%) !important; }
+    .wp-blueprint { background: radial-gradient(circle at 50% 50%, #0d2847 0%, #051329 100%) !important; }
+    .wp-charcoal { background: linear-gradient(135deg, #18181b 0%, #27272a 100%) !important; }
+    .wp-velvet { background: linear-gradient(135deg, #2e0854 0%, #18032e 50%, #0b0217 100%) !important; }
+
+    #splash-screen {
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    @keyframes reverbPulse {
+      0% { transform: scale(0.92); box-shadow: 0 0 0 0 var(--accent-color); }
+      50% { transform: scale(1.18); box-shadow: 0 0 28px 10px var(--accent-color), 0 0 50px 25px var(--accent-subtle); }
+      100% { transform: scale(1); box-shadow: 0 0 45px 30px transparent; }
+    }
+
+    .reverb-btn-active {
+      animation: reverbPulse 0.55s cubic-bezier(0.2, 0.8, 0.25, 1);
+    }
+
+    .reverb-wave-ring {
+      position: absolute;
+      border-radius: 9999px;
+      pointer-events: none;
+      border: 2px solid var(--accent-color);
+      background: radial-gradient(circle, var(--accent-subtle) 10%, transparent 75%);
+      transform: translate(-50%, -50%);
+      animation: spreadThemeWave 0.7s cubic-bezier(0.1, 0.75, 0.25, 1) forwards;
+      z-index: 38;
+    }
+
+    @keyframes spreadThemeWave {
+      0% { width: 48px; height: 48px; opacity: 0.95; transform: translate(-50%, -50%) scale(0.7); }
+      100% { width: 440px; height: 440px; opacity: 0; transform: translate(-50%, -50%) scale(2.2); }
+    }
+
+    /* ==========================================================
+       CHATGPT SKY-CLOUD VOICE ORB
+    ========================================================== */
+    @keyframes skyVoiceMorph {
+      0%, 100% {
+        border-radius: 50%;
+        transform: scale(1) translateY(0px);
+      }
+      33% {
+        border-radius: 49% 51% 52% 48% / 51% 49% 52% 48%;
+        transform: scale(1.02) translateY(-2px);
+      }
+      66% {
+        border-radius: 52% 48% 49% 51% / 48% 52% 48% 52%;
+        transform: scale(0.99) translateY(1.5px);
+      }
+    }
+
+    @keyframes skyCloudDriftA {
+      0% { transform: translate(-8%, -5%) rotate(0deg) scale(1); }
+      50% { transform: translate(6%, 5%) rotate(180deg) scale(1.1); }
+      100% { transform: translate(-8%, -5%) rotate(360deg) scale(1); }
+    }
+
+    @keyframes skyCloudDriftB {
+      0% { transform: translate(5%, 8%) rotate(360deg) scale(1.05); }
+      50% { transform: translate(-6%, -6%) rotate(180deg) scale(0.95); }
+      100% { transform: translate(5%, 8%) rotate(0deg) scale(1.05); }
+    }
+
+    @keyframes skyCloudWisps {
+      0% { transform: translate(-12%, 1%) scaleX(0.95); opacity: 0.88; }
+      50% { transform: translate(10%, -2%) scaleX(1.12); opacity: 0.98; }
+      100% { transform: translate(-12%, 1%) scaleX(0.95); opacity: 0.88; }
+    }
+
+    @keyframes skyAuraPulse {
+      0%, 100% { opacity: 0.45; transform: scale(0.95); }
+      50% { opacity: 0.75; transform: scale(1.12); }
+    }
+
+    .chatgpt-voice-orb-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem 0;
+      flex-shrink: 0;
+    }
+
+    .chatgpt-sky-aura {
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.45) 0%, rgba(96, 165, 250, 0.22) 45%, transparent 70%);
+      filter: blur(20px);
+      animation: skyAuraPulse 4.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .chatgpt-sky-orb {
+      position: relative;
+      width: 125px;
+      height: 125px;
+      overflow: hidden;
+      cursor: pointer;
+      border-radius: 50%;
+      animation: skyVoiceMorph 7.5s ease-in-out infinite;
+      box-shadow: 0 14px 35px -8px rgba(37, 99, 235, 0.6),
+                  0 0 28px 2px rgba(147, 197, 253, 0.35),
+                  inset 0 0 14px rgba(255, 255, 255, 0.3);
+      background: radial-gradient(circle at 50% 18%, #2563eb 0%, #3b82f6 32%, #60a5fa 65%, #93c5fd 90%);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .chatgpt-sky-orb:active {
+      transform: scale(0.93);
+    }
+
+    .sky-layer-base {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, #1d4ed8 0%, #2563eb 25%, #3b82f6 50%, #60a5fa 75%, #93c5fd 100%);
+    }
+
+    .sky-cloud-mass {
+      position: absolute;
+      width: 210%;
+      height: 210%;
+      top: -30%;
+      left: -55%;
+      border-radius: 46% 54% 42% 58% / 52% 44% 56% 48%;
+      background: radial-gradient(circle at 50% 65%, 
+        rgba(255, 255, 255, 0.99) 0%, 
+        rgba(255, 255, 255, 0.92) 24%, 
+        rgba(240, 246, 255, 0.78) 44%, 
+        rgba(191, 219, 254, 0.35) 62%, 
+        transparent 75%
+      );
+      filter: blur(7px);
+      animation: skyCloudDriftA 16s ease-in-out infinite alternate;
+      mix-blend-mode: screen;
+    }
+
+    .sky-cloud-wisps {
+      position: absolute;
+      width: 190%;
+      height: 190%;
+      top: -20%;
+      left: -45%;
+      border-radius: 48% 52% 56% 44% / 45% 55% 45% 55%;
+      background: radial-gradient(circle at 45% 58%, 
+        rgba(255, 255, 255, 0.96) 0%, 
+        rgba(255, 255, 255, 0.75) 28%, 
+        rgba(224, 242, 254, 0.40) 48%, 
+        transparent 70%
+      );
+      filter: blur(8px);
+      animation: skyCloudDriftB 22s ease-in-out infinite alternate;
+      mix-blend-mode: screen;
+    }
+
+    .sky-cirrus-streaks {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 95% 50% at 50% 55%, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(255, 255, 255, 0.65) 45%, 
+        transparent 80%
+      );
+      filter: blur(5px);
+      animation: skyCloudWisps 8s ease-in-out infinite;
+      mix-blend-mode: overlay;
+    }
+
+    .sky-depth-vignette {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, 
+        rgba(29, 78, 216, 0.85) 0%, 
+        rgba(37, 99, 235, 0.40) 28%, 
+        rgba(96, 165, 250, 0.0) 60%, 
+        rgba(147, 197, 253, 0.35) 100%
+      );
+      pointer-events: none;
+    }
+
+    .recording-wave {
+      animation: recPulse 1s ease-in-out infinite;
+    }
+    @keyframes recPulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 min-h-screen flex justify-center items-center p-0 md:p-4 font-sans">
+
+  <!-- Startup Splash Screen -->
+  <div id="splash-screen" class="fixed inset-0 bg-slate-950 z-50 flex flex-col items-center justify-center space-y-3">
+    <div class="w-16 h-16 theme-accent-bg rounded-3xl flex items-center justify-center shadow-2xl animate-pulse overflow-hidden p-2">
+      <img id="splash-app-icon" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="w-full h-full object-contain">
+    </div>
+    <h1 class="text-xl font-extrabold tracking-widest theme-custom-text">BrainwXves</h1>
+  </div>
+
+  <!-- Mobile Frame Container -->
+  <div class="w-full max-w-md h-[100vh] md:h-[840px] bg-slate-900 md:rounded-[40px] shadow-2xl border-0 md:border-8 border-slate-800 flex flex-col overflow-hidden relative wp-aurora" id="app-wallpaper-box">
+
+    <!-- Header Bar: Download & Share removed. Tapping profile picture opens Profile screen! -->
+    <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800/80 px-4 py-2.5 flex items-center justify-between z-20 flex-shrink-0">
+      
+      <!-- Tapping this opens the full Profile things directly -->
+      <div onclick="switchTab('profile')" class="flex items-center space-x-3 cursor-pointer group" title="Open Profile">
+        <div class="relative">
+          <img id="header-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="w-8 h-8 rounded-full object-cover ring-2 theme-accent-ring shadow group-hover:scale-105 transition">
+          <div class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border border-slate-900 flex items-center justify-center text-[7px] text-white">
+            <i class="fa-solid fa-user"></i>
+          </div>
+        </div>
+        <div>
+          <h1 class="font-bold text-sm theme-custom-text flex items-center gap-1.5">
+            <span>BrainwXves</span>
+            <span class="text-[9px] theme-accent-subtle-bg theme-accent-text px-1.5 py-0.5 rounded-full border theme-accent-border font-semibold">Hub</span>
+          </h1>
+          <p id="header-user-label" class="text-xs theme-custom-muted truncate max-w-[120px]">Scholar</p>
+        </div>
+      </div>
+      
+      <!-- Settings Icon Only (Download and Share Removed) -->
+      <div class="flex items-center">
+        <button onclick="switchTab('settings')" class="w-8 h-8 rounded-xl bg-slate-800/80 theme-custom-muted hover:text-white border border-slate-700/50 transition flex items-center justify-center focus:outline-none" title="Settings">
+          <i class="fa-solid fa-sliders text-xs"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Screens -->
+    <main class="flex-1 overflow-hidden relative flex flex-col" id="main-content">
+
+      <!-- TAB 1: NOTES HUB -->
+      <section id="tab-notes" class="tab-view flex-1 overflow-y-auto p-4 pb-20 space-y-4">
+        <!-- Motivation Quote -->
+        <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-3.5 shadow-lg backdrop-blur-sm">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-[9px] font-bold theme-accent-text uppercase tracking-widest"><i class="fa-solid fa-bolt mr-1"></i> Motivation</span>
+          </div>
+          <p id="daily-quote-text" class="text-xs italic theme-custom-text leading-relaxed">"Knowledge is power when put into practice."</p>
+          <p id="daily-quote-author" class="text-[10px] font-semibold theme-accent-text text-right mt-1.5">— Francis Bacon</p>
+        </div>
+
+        <!-- Import & New Note Action Bar -->
+        <div class="flex items-center gap-2">
+          <div class="relative flex-1">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 theme-custom-muted text-xs"></i>
+            <input type="text" id="note-search" oninput="renderNotes()" placeholder="Search your notes..." class="w-full bg-slate-800/80 text-xs theme-custom-text pl-8 pr-3 py-2 rounded-xl border border-slate-700 focus:outline-none">
+          </div>
+
+          <input type="file" id="file-importer" accept=".txt,.md,.json,.csv" multiple onchange="handleFileImport(event)" class="hidden">
+          
+          <button onclick="document.getElementById('file-importer').click()" class="bg-slate-800 hover:bg-slate-700 theme-accent-text border theme-accent-border w-9 h-9 rounded-xl shadow transition focus:outline-none flex items-center justify-center" title="Import Note Files (.txt, .md, .csv, .json)">
+            <i class="fa-solid fa-file-arrow-up text-xs"></i>
+          </button>
+
+          <button onclick="openNoteEditor()" class="theme-accent-bg text-white w-9 h-9 rounded-xl shadow transition focus:outline-none flex items-center justify-center" title="Create New Note">
+            <i class="fa-solid fa-plus text-xs"></i>
+          </button>
+        </div>
+
+        <!-- Note Summary Bar -->
+        <div class="flex items-center justify-between px-1 text-[11px] theme-custom-muted">
+          <span><span id="file-count-badge" class="font-bold theme-accent-text">0</span> notes loaded</span>
+          <span>Tap to read or edit</span>
+        </div>
+
+        <!-- Notes Container -->
+        <div id="notes-container" class="space-y-3"></div>
+      </section>
+
+      <!-- TAB 2: AI VOICE & MULTIMODAL COMPANION -->
+      <section id="tab-ai" class="tab-view hidden flex-1 flex flex-col h-full overflow-hidden p-3 pb-16">
+        
+        <!-- Header Controls -->
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl px-3 py-2 flex items-center justify-between shrink-0 mb-1">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-cloud theme-accent-text text-sm"></i>
+            <h3 id="ai-header-title" class="text-xs font-bold theme-custom-text">
+              <span id="ai-display-title-name">Nova</span>
+              <span class="text-[10px] font-normal theme-custom-muted">• Companion</span>
+            </h3>
+          </div>
+          <button onclick="toggleAiTab()" class="text-xs theme-custom-muted hover:text-white p-1" title="Close Chat">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+
+        <!-- CHATGPT SKY CLOUD ORB -->
+        <div class="chatgpt-voice-orb-container flex-col">
+          <div class="chatgpt-sky-aura"></div>
+          
+          <div id="chatgpt-sky-orb-element" class="chatgpt-sky-orb" onclick="reverberateSkyOrb()" title="Tap orb">
+            <div class="sky-layer-base"></div>
+            <div class="sky-cloud-mass"></div>
+            <div class="sky-cloud-wisps"></div>
+            <div class="sky-cirrus-streaks"></div>
+            <div class="sky-depth-vignette"></div>
+          </div>
+
+          <div class="flex items-center gap-1.5 mt-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-ping"></span>
+            <!-- DYNAMIC [AI NAME] CLOUD VOICE -->
+            <span id="voice-state-label" class="text-[9px] font-bold tracking-widest text-sky-300 uppercase">Nova Cloud Voice</span>
+          </div>
+        </div>
+
+        <!-- Chat History Area -->
+        <div id="ai-chat-history" class="space-y-2 flex-1 overflow-y-auto p-2.5 text-xs bg-slate-950/60 rounded-2xl border border-slate-800 my-1">
+          <div class="bg-slate-800/80 p-2.5 rounded-xl theme-custom-text">
+            👋 Welcome to <strong>BrainwXves</strong>! Send me your questions, pictures, videos, audio clips, or voice notes.
+          </div>
+        </div>
+
+        <!-- Media Attachment Preview Bar -->
+        <div id="chat-media-preview-bar" class="hidden flex items-center gap-2 p-2 bg-slate-800/95 rounded-xl border border-slate-700 mb-1.5 shrink-0">
+          <div id="preview-thumbnail-container" class="w-10 h-10 rounded-lg bg-slate-900 overflow-hidden flex items-center justify-center text-xs"></div>
+          <div class="flex-1 min-w-0">
+            <p id="preview-media-name" class="text-[11px] font-semibold theme-custom-text truncate">attachment</p>
+            <span id="preview-media-type" class="text-[9px] theme-accent-text uppercase">Media</span>
+          </div>
+          <button onclick="clearMediaAttachment()" class="text-xs text-rose-400 p-1 hover:text-rose-300">
+            <i class="fa-solid fa-circle-xmark text-sm"></i>
+          </button>
+        </div>
+
+        <!-- Recording Indicator Bar -->
+        <div id="voice-recording-bar" class="hidden flex items-center justify-between p-2 bg-rose-950/60 border border-rose-500/50 rounded-xl text-xs text-rose-300 mb-1.5 shrink-0">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-500 recording-wave"></span>
+            <span>Recording Voice Note... <span id="recording-time" class="font-mono font-bold">00:00</span></span>
+          </div>
+          <button onclick="stopVoiceRecording()" class="bg-rose-600 hover:bg-rose-500 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold">
+            Done
+          </button>
+        </div>
+
+        <!-- PINNED SEND BAR WITH DYNAMIC PLACEHOLDER -->
+        <div class="flex items-center gap-1.5 p-2 bg-slate-900/95 rounded-2xl border border-slate-700 shadow-xl shrink-0 z-20">
+          <input type="file" id="chat-media-input" accept="image/*,video/*,audio/*,.pdf,.txt,.doc*" onchange="handleMediaSelected(event)" class="hidden">
+          
+          <!-- Attachment Button -->
+          <button onclick="document.getElementById('chat-media-input').click()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white w-9 h-9 rounded-xl border border-slate-700 flex items-center justify-center text-xs transition" title="Attach media or file">
+            <i class="fa-solid fa-paperclip"></i>
+          </button>
+
+          <!-- Voice Note Button -->
+          <button id="voice-record-btn" onclick="toggleVoiceRecording()" class="bg-slate-800 hover:bg-slate-700 theme-accent-text w-9 h-9 rounded-xl border theme-accent-border flex items-center justify-center text-xs transition" title="Record Voice Note">
+            <i class="fa-solid fa-microphone"></i>
+          </button>
+
+          <!-- Dynamic "Tap a message to [Name]..." Text Field -->
+          <input type="text" id="ai-user-input" placeholder="Tap a message to Nova..." class="flex-1 bg-slate-800/90 text-xs theme-custom-text px-3 py-2 rounded-xl border border-slate-700 focus:outline-none focus:border-emerald-500 transition" onkeydown="if(event.key==='Enter') sendAiMessage()">
+          
+          <!-- Send Button -->
+          <button onclick="sendAiMessage()" class="theme-accent-bg text-white w-9 h-9 rounded-xl text-xs font-semibold flex items-center justify-center focus:outline-none shadow active:scale-95 transition" title="Send message">
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- TAB 3: QUIZ ENGINE -->
+      <section id="tab-game" class="tab-view hidden flex-1 overflow-y-auto p-4 pb-20 space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-sm font-bold theme-custom-text">Interactive Quiz</h2>
+            <p class="text-[10px] theme-custom-muted">Built from your notes</p>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button onclick="generateQuizFromNotes()" class="w-8 h-8 theme-accent-bg text-white rounded-xl focus:outline-none transition flex items-center justify-center" title="Rebuild Quiz">
+              <i class="fa-solid fa-wand-magic-sparkles text-xs"></i>
+            </button>
+            <button onclick="printQuiz()" id="print-quiz-btn" class="hidden w-8 h-8 bg-slate-800 hover:bg-slate-700 theme-accent-text border theme-accent-border rounded-xl focus:outline-none flex items-center justify-center" title="Print Quiz">
+              <i class="fa-solid fa-print text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="quiz-box-card" class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4 space-y-3">
+          <div id="quiz-empty-state" class="py-12 text-center space-y-3">
+            <div class="w-12 h-12 rounded-full theme-accent-subtle-bg flex items-center justify-center mx-auto text-lg theme-accent-text">
+              <i class="fa-solid fa-file-circle-question"></i>
+            </div>
+            <h3 class="text-xs font-bold theme-custom-text">No Quizzes Generated Yet</h3>
+            <p class="text-[11px] theme-custom-muted max-w-xs mx-auto">
+              Add your notes in the Notes tab. BrainwXves will automatically build questions!
+            </p>
+            <button onclick="generateQuizFromNotes()" class="theme-accent-bg text-white text-xs font-bold px-4 py-2 rounded-xl transition inline-flex items-center gap-1.5">
+              <i class="fa-solid fa-sparkles"></i> Build Quiz
+            </button>
+          </div>
+
+          <div id="quiz-active-area" class="hidden space-y-3">
+            <div class="flex justify-between text-[11px] theme-custom-muted">
+              <span id="quiz-progress-label">Question 1</span>
+              <span id="quiz-score-label" class="theme-accent-text font-bold">Score: 0</span>
+            </div>
+            
+            <div class="bg-slate-900/70 p-3 rounded-xl border border-slate-800">
+              <div class="flex items-center gap-1.5 mb-1.5">
+                <span class="text-[8px] font-bold uppercase tracking-wider theme-accent-bg text-white px-1.5 py-0.5 rounded">Source</span>
+                <span id="quiz-source-tag" class="text-[10px] font-semibold theme-accent-text truncate"></span>
+              </div>
+              <h3 id="game-question" class="text-xs font-bold theme-custom-text leading-snug">Loading question...</h3>
+            </div>
+
+            <div id="game-options" class="space-y-2 text-xs"></div>
+            <div id="quiz-feedback" class="text-xs font-semibold hidden pt-1"></div>
+            
+            <button id="next-quiz-btn" onclick="nextQuizQuestion()" class="w-full theme-accent-bg text-white font-bold py-2 rounded-xl text-xs hidden transition focus:outline-none flex items-center justify-center gap-1.5">
+              <span>Next</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: STUDY TIMER & PERSISTENT MUSIC ENGINE -->
+      <section id="tab-timer" class="tab-view hidden flex-1 overflow-y-auto p-4 pb-20 space-y-4">
+        <div>
+          <h2 class="text-sm font-bold theme-custom-text">Study Timer & Music Hub</h2>
+          <p class="text-[10px] theme-custom-muted">Focus countdown with permanent offline music</p>
+        </div>
+
+        <!-- Pomodoro Timer Box -->
+        <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-5 text-center space-y-3">
+          <div class="inline-block px-3 py-1 rounded-full theme-accent-subtle-bg border theme-accent-border text-[10px] font-bold theme-accent-text uppercase tracking-widest" id="timer-mode-tag">
+            Focus Session
+          </div>
+
+          <div class="text-5xl font-extrabold font-mono theme-custom-text tracking-wider my-2" id="timer-display">
+            25:00
+          </div>
+
+          <div class="flex items-center justify-center gap-2">
+            <button onclick="toggleTimer()" id="timer-toggle-btn" class="theme-accent-bg text-white w-10 h-10 rounded-2xl flex items-center justify-center shadow hover:brightness-110 transition">
+              <i class="fa-solid fa-play text-sm" id="timer-play-icon"></i>
+            </button>
+            <button onclick="resetTimer()" class="bg-slate-700 hover:bg-slate-600 theme-custom-text w-10 h-10 rounded-2xl flex items-center justify-center transition" title="Reset Timer">
+              <i class="fa-solid fa-rotate-right text-sm"></i>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 pt-1 text-[11px]">
+            <button onclick="setTimerDuration(25, 'Focus Session')" class="bg-slate-900/80 p-1.5 rounded-xl border border-slate-700 theme-custom-text hover:border-emerald-500">25 min</button>
+            <button onclick="setTimerDuration(5, 'Short Break')" class="bg-slate-900/80 p-1.5 rounded-xl border border-slate-700 theme-custom-text hover:border-emerald-500">5 min</button>
+            <button onclick="setTimerDuration(15, 'Long Break')" class="bg-slate-900/80 p-1.5 rounded-xl border border-slate-700 theme-custom-text hover:border-emerald-500">15 min</button>
+          </div>
+        </div>
+
+        <!-- OFFLINE MUSIC PLAYER -->
+        <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-music theme-accent-text text-sm"></i>
+              <h3 class="text-xs font-bold theme-custom-text">Focus Music Library</h3>
+            </div>
+            
+            <input type="file" id="music-importer" accept="audio/*" multiple onchange="handleMusicImport(event)" class="hidden">
+            <button onclick="document.getElementById('music-importer').click()" class="w-8 h-8 rounded-xl theme-accent-subtle-bg theme-accent-text border theme-accent-border flex items-center justify-center text-xs" title="Import Audio Files">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+
+          <div class="bg-slate-900/80 border border-slate-700/70 rounded-xl p-3 flex items-center justify-between">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <div class="w-8 h-8 rounded-lg theme-accent-bg flex items-center justify-center text-white shrink-0">
+                <i class="fa-solid fa-compact-disc animate-spin" id="music-disc-icon" style="animation-play-state: paused;"></i>
+              </div>
+              <div class="min-w-0">
+                <p id="current-track-name" class="text-xs font-semibold theme-custom-text truncate">No track playing</p>
+                <p id="current-track-status" class="text-[10px] theme-custom-muted">Import songs to play offline</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <button onclick="toggleAudioPlayback()" id="music-play-btn" class="w-8 h-8 rounded-full theme-accent-bg text-white flex items-center justify-center text-xs">
+                <i class="fa-solid fa-play" id="audio-play-icon"></i>
+              </button>
+            </div>
+          </div>
+
+          <audio id="global-audio-element" onended="onAudioEnded()" ontimeupdate="updateAudioProgress()"></audio>
+
+          <div class="space-y-1">
+            <input type="range" id="audio-progress-bar" min="0" max="100" value="0" oninput="seekAudio(this.value)" class="w-full h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+            <div class="flex justify-between text-[9px] font-mono theme-custom-muted">
+              <span id="audio-time-current">0:00</span>
+              <span id="audio-time-total">0:00</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-[10px] theme-custom-muted px-1">
+            <span>Saved Tracks (<span id="saved-music-count" class="font-bold theme-accent-text">0</span>)</span>
+            <span>Tap track to play</span>
+          </div>
+
+          <div class="space-y-1.5 max-h-48 overflow-y-auto pt-1" id="music-playlist-box"></div>
+        </div>
+      </section>
+
+      <!-- TAB 5: PROFILE & STUDY STATS (OPENED BY TAPPING PROFILE PICTURE) -->
+      <section id="tab-profile" class="tab-view hidden flex-1 overflow-y-auto p-4 pb-20 space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-bold theme-custom-text">Scholar Profile</h2>
+          <button onclick="switchTab('notes')" class="text-xs theme-custom-muted hover:text-white p-1">
+            <i class="fa-solid fa-arrow-left mr-1"></i> Back
+          </button>
+        </div>
+
+        <div class="bg-slate-800/70 border border-slate-700/80 rounded-2xl p-4 text-center relative shadow-xl">
+          <div class="relative w-16 h-16 mx-auto mb-2 cursor-pointer group" onclick="openProfileEditModal()" title="Tap to change photo">
+            <img id="profile-picture-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="w-16 h-16 rounded-full object-cover ring-2 theme-accent-ring group-hover:opacity-80 transition">
+            <div class="absolute inset-0 rounded-full bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition text-white text-xs">
+              <i class="fa-solid fa-camera"></i>
+            </div>
+          </div>
+
+          <h2 id="profile-display-name" class="font-bold text-sm theme-custom-text">Scholar</h2>
+          <p class="text-[11px] theme-custom-muted">BrainwXves Scholar</p>
+          
+          <button onclick="openProfileEditModal()" class="mt-2 bg-slate-700 hover:bg-slate-600 theme-custom-text text-xs px-3 py-1 rounded-xl transition focus:outline-none">
+            <i class="fa-solid fa-user-pen mr-1"></i> Edit Profile
+          </button>
+        </div>
+
+        <div class="bg-slate-800/60 border border-slate-700/70 rounded-2xl p-4 space-y-3 text-xs">
+          <h3 class="font-bold theme-custom-text flex items-center justify-between">
+            <span>Study Progress</span>
+            <button onclick="editGoals()" class="theme-accent-text text-[11px]"><i class="fa-solid fa-pen"></i> Edit Goal</button>
+          </h3>
+          <div class="grid grid-cols-2 gap-2 text-center">
+            <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+              <span id="stat-notes-count" class="text-base font-bold theme-accent-text">0</span>
+              <p class="text-[10px] theme-custom-muted uppercase">Notes</p>
+            </div>
+            <div class="bg-slate-900/60 p-2.5 rounded-xl border border-slate-800">
+              <span id="stat-quiz-score" class="text-base font-bold text-amber-400">0</span>
+              <p class="text-[10px] theme-custom-muted uppercase">Score</p>
+            </div>
+          </div>
+          <div>
+            <label class="theme-custom-muted text-[10px] block mb-1">Target Goal:</label>
+            <p id="profile-goal-text" class="theme-custom-text bg-slate-900/80 p-2 rounded-xl border border-slate-800">Review all imported subject materials!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: SETTINGS -->
+      <section id="tab-settings" class="tab-view hidden flex-1 overflow-y-auto p-4 pb-20 space-y-4">
+        <div>
+          <h2 class="text-sm font-bold theme-custom-text">Settings & Customization</h2>
+          <p class="text-[10px] theme-custom-muted">Customize wallpaper, colors, and companion settings</p>
+        </div>
+
+        <!-- 1. Home Screen App Icon Customizer -->
+        <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-3.5 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold theme-custom-text"><i class="fa-solid fa-icons theme-accent-text mr-1.5"></i> Home Screen Icon</h3>
+            <span class="text-[9px] px-2 py-0.5 rounded-md bg-slate-900 text-slate-300 border border-slate-700">App Icon</span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl theme-accent-bg flex items-center justify-center p-2 overflow-hidden shadow-lg border border-slate-700 shrink-0">
+              <img id="settings-app-icon-preview" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="w-full h-full object-contain">
+            </div>
+            <div class="flex-1">
+              <input type="file" id="app-icon-file-input" accept="image/*" onchange="uploadCustomAppIcon(event)" class="hidden">
+              <button onclick="document.getElementById('app-icon-file-input').click()" class="theme-accent-bg text-white text-xs py-1.5 px-3 rounded-xl font-semibold w-full flex items-center justify-center gap-1.5 transition">
+                <i class="fa-solid fa-image"></i>
+                <span>Change Home Icon</span>
+              </button>
+              <button onclick="resetAppIcon()" class="text-[10px] theme-custom-muted hover:text-white mt-1 w-full text-center">
+                Reset to Default
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Wallpaper Controls -->
+        <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-3.5 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold theme-custom-text"><i class="fa-solid fa-image theme-accent-text mr-1.5"></i> Wallpaper</h3>
+            <span id="wallpaper-status-badge" class="text-[10px] px-2 py-0.5 rounded-md bg-slate-900 text-slate-300 border border-slate-700">Preset Theme</span>
+          </div>
+
+          <div class="grid grid-cols-5 gap-1.5 text-[10px]">
+            <button onclick="setWallpaperClass('wp-aurora')" class="py-1.5 rounded-lg border border-emerald-800 bg-emerald-950 text-emerald-200 transition font-medium">Aurora</button>
+            <button onclick="setWallpaperClass('wp-midnight')" class="py-1.5 rounded-lg border border-indigo-800 bg-indigo-950 text-indigo-200 transition font-medium">Midnight</button>
+            <button onclick="setWallpaperClass('wp-blueprint')" class="py-1.5 rounded-lg border border-sky-800 bg-sky-950 text-sky-200 transition font-medium">Blueprint</button>
+            <button onclick="setWallpaperClass('wp-charcoal')" class="py-1.5 rounded-lg border border-zinc-700 bg-zinc-900 text-zinc-200 transition font-medium">Charcoal</button>
+            <button onclick="setWallpaperClass('wp-velvet')" class="py-1.5 rounded-lg border border-purple-800 bg-purple-950 text-purple-200 transition font-medium">Velvet</button>
+          </div>
+
+          <div class="pt-1 flex items-center gap-2">
+            <input type="file" id="wallpaper-file-input" accept="image/*" onchange="uploadCustomWallpaper(event)" class="hidden">
+            <button onclick="document.getElementById('wallpaper-file-input').click()" class="flex-1 theme-accent-bg text-white text-xs py-2 px-3 rounded-xl font-semibold flex items-center justify-center gap-2 shadow hover:opacity-90 transition focus:outline-none">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span>Custom Wallpaper</span>
+            </button>
+            <button onclick="resetWallpaper()" class="bg-slate-700 hover:bg-slate-600 theme-custom-text text-xs py-2 px-3 rounded-xl font-semibold transition focus:outline-none">
+              Reset
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Text Color -->
+        <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-3.5 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold theme-custom-text"><i class="fa-solid fa-paint-roller theme-accent-text mr-1.5"></i> Text Color</h3>
+            <label class="text-[10px] theme-custom-muted flex items-center gap-1.5 cursor-pointer bg-slate-900 px-2 py-1 rounded-lg border border-slate-700">
+              <input type="color" id="custom-text-color-picker" onchange="setCustomTextColor(this.value)" class="w-4 h-4 rounded cursor-pointer border-0 bg-transparent">
+            </label>
+          </div>
+          <div class="grid grid-cols-3 gap-2 text-xs">
+            <button onclick="setTextColorPalette('#f8fafc', '#94a3b8')" class="p-2 rounded-xl bg-slate-900 border border-slate-700 text-left">
+              <span class="inline-block w-2 h-2 rounded-full bg-slate-100 mr-1"></span>
+              <span class="text-[11px] text-white">White</span>
+            </button>
+            <button onclick="setTextColorPalette('#fef3c7', '#d1d5db')" class="p-2 rounded-xl bg-slate-900 border border-slate-700 text-left">
+              <span class="inline-block w-2 h-2 rounded-full bg-amber-100 mr-1"></span>
+              <span class="text-[11px] text-amber-100">Parchment</span>
+            </button>
+            <button onclick="setTextColorPalette('#86efac', '#6ee7b7')" class="p-2 rounded-xl bg-slate-900 border border-slate-700 text-left">
+              <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 mr-1"></span>
+              <span class="text-[11px] text-emerald-300">Terminal</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 4. Accent Color -->
+        <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-3.5 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold theme-custom-text"><i class="fa-solid fa-palette theme-accent-text mr-1.5"></i> Accent</h3>
+            <label class="text-[10px] theme-custom-muted flex items-center gap-1.5 cursor-pointer bg-slate-900 px-2 py-1 rounded-lg border border-slate-700">
+              <input type="color" id="custom-color-picker" onchange="setCustomAccentColor(this.value)" class="w-4 h-4 rounded cursor-pointer border-0 bg-transparent">
+            </label>
+          </div>
+          <div class="grid grid-cols-3 gap-2 text-xs">
+            <button onclick="setThemeAccent('#10b981', '#059669')" class="p-2 rounded-xl bg-slate-900 border border-slate-700 text-left flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+              <span class="text-[11px] theme-custom-text">Emerald</span>
+            </button>
+            <button onclick="setThemeAccent('#3b82f6', '#2563eb')" class="p-2 rounded-xl bg-slate-900 border border-slate-700 text-left flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-blue-500 inline-block"></span>
+              <span class="text-[11px] theme-custom-text">Sky Blue</span>
+            </button>
+            <button onclick="setThemeAccent('#8b5cf6', '#7c3aed')" class="p-2 rounded-xl bg-slate-900 border border-slate-700 text-left flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-violet-500 inline-block"></span>
+              <span class="text-[11px] theme-custom-text">Violet</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 5. Companion Name Setting -->
+        <div class="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-3.5 space-y-2">
+          <h3 class="text-xs font-bold theme-custom-text"><i class="fa-solid fa-robot theme-accent-text mr-1.5"></i> Companion Name</h3>
+          <div class="flex gap-2">
+            <input type="text" id="setting-ai-name" placeholder="Nova..." class="flex-1 bg-slate-900 text-xs theme-custom-text p-2 rounded-xl border border-slate-700 focus:outline-none">
+            <button onclick="saveAiName()" class="theme-accent-bg text-white w-9 h-9 rounded-xl flex items-center justify-center">
+              <i class="fa-solid fa-check text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Clear Data -->
+        <div class="bg-red-950/20 border border-red-500/20 rounded-2xl p-3 flex justify-between items-center">
+          <div>
+            <h4 class="text-xs font-bold text-red-300">Wipe Data</h4>
+            <p class="text-[10px] theme-custom-muted">Clear all notes, music library & scores.</p>
+          </div>
+          <button onclick="clearAllData()" class="bg-red-600/80 hover:bg-red-500 text-white text-[11px] font-bold px-3 py-1.5 rounded-xl">Clear All</button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FLOATING AI SPHERE BUTTON -->
+    <button id="floating-ai-btn" onclick="triggerAiWithReverb(event)" class="absolute bottom-16 right-4 z-40 w-12 h-12 rounded-full theme-accent-bg text-white shadow-2xl flex items-center justify-center text-base hover:scale-110 active:scale-95 transition-all duration-200 border-2 border-slate-900 ring-2 theme-accent-ring" title="AI Companion">
+      <i class="fa-solid fa-cloud" id="floating-ai-icon"></i>
+      <span class="absolute top-0 right-0 flex h-2.5 w-2.5">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-300 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-400"></span>
+      </span>
+    </button>
+
+    <!-- Bottom Navigation Bar: Clean 3-Tab Layout (Notes, Timer, Quiz) -->
+    <nav class="bg-slate-900/95 backdrop-blur-lg border-t border-slate-800/80 px-4 py-2 flex justify-around items-center absolute bottom-0 left-0 right-0 z-30">
+      <button onclick="switchTab('notes')" id="nav-btn-notes" class="nav-btn theme-accent-text flex flex-col items-center gap-1 focus:outline-none flex-1">
+        <i class="fa-solid fa-note-sticky text-base"></i>
+        <span class="text-[10px] font-medium">Notes</span>
+      </button>
+      <button onclick="switchTab('timer')" id="nav-btn-timer" class="nav-btn theme-custom-muted hover:text-slate-200 flex flex-col items-center gap-1 focus:outline-none flex-1">
+        <i class="fa-solid fa-clock text-base"></i>
+        <span class="text-[10px] font-medium">Timer</span>
+      </button>
+      <button onclick="switchTab('game')" id="nav-btn-game" class="nav-btn theme-custom-muted hover:text-slate-200 flex flex-col items-center gap-1 focus:outline-none flex-1">
+        <i class="fa-solid fa-gamepad text-base"></i>
+        <span class="text-[10px] font-medium">Quiz</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- Note Editor Modal -->
+  <div id="note-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex justify-center items-end md:items-center">
+    <div class="w-full max-w-md bg-slate-900 border border-slate-800 rounded-t-3xl md:rounded-3xl p-5 h-[90vh] flex flex-col shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <span class="text-xs font-bold theme-accent-text flex items-center gap-1">
+          <i class="fa-solid fa-file-lines"></i> Note Editor
+        </span>
+        <div class="flex items-center gap-1.5">
+          <button onclick="shareSingleNote()" class="w-8 h-8 rounded-lg bg-slate-800 theme-custom-muted hover:text-white flex items-center justify-center text-xs border border-slate-700" title="Share Note">
+            <i class="fa-solid fa-share-nodes"></i>
+          </button>
+          <button onclick="downloadNotePDF()" class="w-8 h-8 rounded-lg theme-accent-subtle-bg theme-accent-text border theme-accent-border flex items-center justify-center text-xs font-semibold focus:outline-none" title="Download PDF">
+            <i class="fa-solid fa-file-pdf"></i>
+          </button>
+          <button onclick="closeNoteModal()" class="w-8 h-8 rounded-lg bg-slate-800 theme-custom-muted hover:text-white flex items-center justify-center text-xs border border-slate-700 focus:outline-none">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+      <input type="text" id="modal-title-input" placeholder="Title..." class="w-full bg-transparent theme-custom-text text-base font-bold my-3 focus:outline-none border-b border-slate-800 pb-2">
+      <textarea id="modal-content-input" placeholder="Type or paste study text, definitions, or questions..." class="w-full flex-1 bg-transparent theme-custom-text text-xs leading-relaxed my-2 resize-none focus:outline-none"></textarea>
+      <div class="pt-3 border-t border-slate-800 flex justify-between items-center">
+        <button onclick="deleteCurrentNote()" class="text-xs text-red-400 focus:outline-none flex items-center gap-1">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+        <button onclick="saveCurrentNote()" class="theme-accent-bg text-white font-semibold text-xs px-4 py-2 rounded-xl focus:outline-none flex items-center gap-1">
+          <i class="fa-solid fa-check"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Edit Modal -->
+  <div id="profile-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex justify-center items-center p-4">
+    <div class="w-full max-w-xs bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+      <h3 class="text-sm font-bold theme-custom-text">Edit Profile</h3>
+      <div>
+        <label class="text-[11px] theme-custom-muted block mb-1">Your Name</label>
+        <input type="text" id="edit-name-input" class="w-full bg-slate-800 border border-slate-700 text-xs rounded-xl p-2 theme-custom-text focus:outline-none">
+      </div>
+      <div>
+        <label class="text-[11px] theme-custom-muted block mb-1">Upload New Photo</label>
+        <input type="file" id="profile-file-input" accept="image/*" class="w-full text-xs theme-custom-muted file:mr-2 file:py-1 file:px-2 file:rounded-xl file:border-0 file:text-xs theme-accent-bg file:text-white">
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeProfileEditModal()" class="text-xs theme-custom-muted px-3 py-1.5 focus:outline-none">Cancel</button>
+        <button onclick="saveProfileEdit()" class="text-xs theme-accent-bg text-white px-3 py-1.5 rounded-xl font-semibold focus:outline-none">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ==========================================================
+       APP STATE
+    ========================================================== */
+    const DEFAULT_ICON = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+
+    let appData = {
+      appIcon: DEFAULT_ICON,
+      user: { 
+        name: "Scholar", 
+        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80", 
+        goal: "Review all imported materials!" 
+      },
+      aiName: "Nova",
+      accentColor: "#10b981",
+      accentHover: "#059669",
+      textColor: "#f8fafc",
+      mutedColor: "#94a3b8",
+      fontTheme: "font-sans",
+      wallpaper: "wp-aurora",
+      customBgImage: "",
+      activeTab: "notes",
+      quizScore: 0,
+      notes: []
+    };
+
+    let generatedQuizBank = [];
+    let currentQuizIndex = 0;
+    let activeEditingNoteId = null;
+    let previousTab = "notes";
+    let pendingMediaAttachment = null;
+
+    // Timer Variables
+    let timerDuration = 25 * 60;
+    let timerRemaining = 25 * 60;
+    let timerInterval = null;
+    let timerRunning = false;
+
+    // Persistent Music Player Variables (IndexedDB)
+    let persistentTracks = [];
+    let currentTrackIndex = -1;
+    let dbInstance = null;
+    const globalAudio = document.getElementById('global-audio-element');
+
+    // Voice Recorder Variables
+    let mediaRecorder = null;
+    let recordedAudioChunks = [];
+    let recordingInterval = null;
+    let recordingSeconds = 0;
+
+    /* ==========================================================
+       INDEXEDDB MUSIC ENGINE
+    ========================================================== */
+    function initIndexedDB() {
+      return new Promise((resolve) => {
+        const req = indexedDB.open('BrainwXvesAudioDB', 1);
+        req.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains('musicTracks')) {
+            db.createObjectStore('musicTracks', { keyPath: 'id' });
+          }
+        };
+        req.onsuccess = (e) => {
+          dbInstance = e.target.result;
+          loadTracksFromIndexedDB().then(resolve);
+        };
+        req.onerror = () => resolve();
+      });
+    }
+
+    function saveTrackToIndexedDB(track) {
+      return new Promise((resolve) => {
+        if (!dbInstance) return resolve();
+        const tx = dbInstance.transaction('musicTracks', 'readwrite');
+        const store = tx.objectStore('musicTracks');
+        store.put(track);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => resolve();
+      });
+    }
+
+    function removeTrackFromIndexedDB(id) {
+      return new Promise((resolve) => {
+        if (!dbInstance) return resolve();
+        const tx = dbInstance.transaction('musicTracks', 'readwrite');
+        const store = tx.objectStore('musicTracks');
+        store.delete(id);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => resolve();
+      });
+    }
+
+    function loadTracksFromIndexedDB() {
+      return new Promise((resolve) => {
+        if (!dbInstance) return resolve();
+        const tx = dbInstance.transaction('musicTracks', 'readonly');
+        const store = tx.objectStore('musicTracks');
+        const req = store.getAll();
+        req.onsuccess = () => {
+          persistentTracks = req.result || [];
+          renderPlaylist();
+          resolve();
+        };
+        req.onerror = () => resolve();
+      });
+    }
+
+    /* ==========================================================
+       INITIALIZATION
+    ========================================================== */
+    window.addEventListener('DOMContentLoaded', async () => {
+      loadStorage();
+      applyAppIcon();
+      applyColorAndTheme();
+      renderAll();
+      initMotivation();
+      await initIndexedDB();
+
+      setTimeout(() => {
+        const splash = document.getElementById('splash-screen');
+        if (splash) {
+          splash.style.opacity = '0';
+          setTimeout(() => splash.remove(), 400);
+        }
+      }, 500);
+    });
+
+    function loadStorage() {
+      const saved = localStorage.getItem('brainwxves_data_v1');
+      if (saved) {
+        try { 
+          appData = { ...appData, ...JSON.parse(saved) }; 
+        } catch (e) {
+          console.error("Storage load fail", e);
+        }
+      }
+    }
+
+    function saveStorage() {
+      try {
+        localStorage.setItem('brainwxves_data_v1', JSON.stringify(appData));
+      } catch (e) {
+        console.warn("Storage warning", e);
+      }
+    }
+
+    function renderAll() {
+      applyWallpaper();
+      renderHeaderAndProfile();
+      renderNotes();
+      updateQuizUI();
+    }
+
+    /* ==========================================================
+       DYNAMIC HOME SCREEN ICON
+    ========================================================== */
+    function applyAppIcon() {
+      const iconUrl = appData.appIcon || DEFAULT_ICON;
+      
+      const fav = document.getElementById('dynamic-favicon');
+      const apple = document.getElementById('dynamic-apple-icon');
+      const splash = document.getElementById('splash-app-icon');
+      const preview = document.getElementById('settings-app-icon-preview');
+
+      if (fav) fav.href = iconUrl;
+      if (apple) apple.href = iconUrl;
+      if (splash) splash.src = iconUrl;
+      if (preview) preview.src = iconUrl;
+
+      const manifestJson = {
+        id: "brainwxves-pwa",
+        name: "BrainwXves",
+        short_name: "BrainwXves",
+        description: "Offline note study hub, multimodal voice companion, and music timer.",
+        start_url: "./",
+        scope: "./",
+        display: "standalone",
+        orientation: "portrait",
+        background_color: "#0f172a",
+        theme_color: appData.accentColor || "#10b981",
+        icons: [
+          { src: iconUrl, sizes: "192x192", type: "image/png", purpose: "any maskable" },
+          { src: iconUrl, sizes: "512x512", type: "image/png", purpose: "any maskable" }
+        ]
+      };
+
+      const manifestBlob = new Blob([JSON.stringify(manifestJson)], { type: 'application/json' });
+      const manifestUrl = URL.createObjectURL(manifestBlob);
+      const manifestLink = document.getElementById('pwa-manifest-link');
+      if (manifestLink) manifestLink.href = manifestUrl;
+    }
+
+    function uploadCustomAppIcon(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      compressImage(file, 256, 256, 0.9, (dataUrl) => {
+        appData.appIcon = dataUrl;
+        saveStorage();
+        applyAppIcon();
+        alert("Home Screen Icon updated!");
+      });
+      e.target.value = '';
+    }
+
+    function resetAppIcon() {
+      appData.appIcon = DEFAULT_ICON;
+      saveStorage();
+      applyAppIcon();
+      alert("Icon reset to default.");
+    }
+
+    /* ==========================================================
+       SKY CLOUD ORB REVERBERATION
+    ========================================================== */
+    function reverberateSkyOrb() {
+      if (navigator.vibrate) navigator.vibrate([25, 30, 45]);
+      const orb = document.getElementById('chatgpt-sky-orb-element');
+      const label = document.getElementById('voice-state-label');
+      if (orb) {
+        orb.style.transform = 'scale(1.15)';
+        if (label) label.innerText = "Speaking...";
+        setTimeout(() => {
+          orb.style.transform = '';
+          if (label) label.innerText = `${appData.aiName} Cloud Voice`;
+        }, 800);
+      }
+    }
+
+    function triggerAiWithReverb(event) {
+      const btn = document.getElementById('floating-ai-btn');
+      if (navigator.vibrate) navigator.vibrate([30, 40, 50]);
+
+      btn.classList.remove('reverb-btn-active');
+      void btn.offsetWidth;
+      btn.classList.add('reverb-btn-active');
+
+      spawnThemeRippleRings(btn);
+      toggleAiTab();
+    }
+
+    function spawnThemeRippleRings(originElement) {
+      const parentContainer = document.getElementById('app-wallpaper-box');
+      if (!parentContainer || !originElement) return;
+
+      const rect = originElement.getBoundingClientRect();
+      const parentRect = parentContainer.getBoundingClientRect();
+
+      const originX = (rect.left + rect.width / 2) - parentRect.left;
+      const originY = (rect.top + rect.height / 2) - parentRect.top;
+
+      [0, 120, 240].forEach((delay) => {
+        setTimeout(() => {
+          const wave = document.createElement('div');
+          wave.className = 'reverb-wave-ring';
+          wave.style.left = `${originX}px`;
+          wave.style.top = `${originY}px`;
+          parentContainer.appendChild(wave);
+
+          setTimeout(() => {
+            if (wave && wave.parentNode) wave.remove();
+          }, 750);
+        }, delay);
+      });
+    }
+
+    /* ==========================================================
+       MULTIMODAL CHAT
+    ========================================================== */
+    function handleMediaSelected(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      const isImage = file.type.startsWith('image/');
+      const isVideo = file.type.startsWith('video/');
+      const isAudio = file.type.startsWith('audio/');
+
+      reader.onload = (e) => {
+        pendingMediaAttachment = {
+          name: file.name,
+          type: file.type,
+          dataUrl: e.target.result,
+          isImage,
+          isVideo,
+          isAudio
+        };
+
+        const previewBar = document.getElementById('chat-media-preview-bar');
+        const thumb = document.getElementById('preview-thumbnail-container');
+        const nameLabel = document.getElementById('preview-media-name');
+        const typeLabel = document.getElementById('preview-media-type');
+
+        nameLabel.innerText = file.name;
+        typeLabel.innerText = isImage ? "Picture" : isVideo ? "Video" : isAudio ? "Music / Audio" : "Document";
+
+        if (isImage) {
+          thumb.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
+        } else if (isVideo) {
+          thumb.innerHTML = `<i class="fa-solid fa-video text-amber-400 text-sm"></i>`;
+        } else if (isAudio) {
+          thumb.innerHTML = `<i class="fa-solid fa-music theme-accent-text text-sm"></i>`;
+        } else {
+          thumb.innerHTML = `<i class="fa-solid fa-file text-slate-300 text-sm"></i>`;
+        }
+
+        previewBar.classList.remove('hidden');
+      };
+
+      reader.readAsDataURL(file);
+      event.target.value = '';
+    }
+
+    function clearMediaAttachment() {
+      pendingMediaAttachment = null;
+      document.getElementById('chat-media-preview-bar').classList.add('hidden');
+    }
+
+    async function toggleVoiceRecording() {
+      if (mediaRecorder && mediaRecorder.state === 'recording') {
+        stopVoiceRecording();
+      } else {
+        startVoiceRecording();
+      }
+    }
+
+    async function startVoiceRecording() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        recordedAudioChunks = [];
+
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data.size > 0) recordedAudioChunks.push(e.data);
+        };
+
+        mediaRecorder.onstop = () => {
+          const audioBlob = new Blob(recordedAudioChunks, { type: 'audio/webm' });
+          const audioUrl = URL.createObjectURL(audioBlob);
+          sendVoiceNoteMessage(audioUrl);
+          stream.getTracks().forEach(track => track.stop());
+        };
+
+        mediaRecorder.start();
+        recordingSeconds = 0;
+        document.getElementById('voice-recording-bar').classList.remove('hidden');
+        document.getElementById('recording-time').innerText = "00:00";
+        recordingInterval = setInterval(() => {
+          recordingSeconds++;
+          const mins = String(Math.floor(recordingSeconds / 60)).padStart(2, '0');
+          const secs = String(recordingSeconds % 60).padStart(2, '0');
+          document.getElementById('recording-time').innerText = `${mins}:${secs}`;
+        }, 1000);
+
+      } catch (err) {
+        alert("Microphone permission required for voice notes!");
+      }
+    }
+
+    function stopVoiceRecording() {
+      if (mediaRecorder && mediaRecorder.state === 'recording') {
+        mediaRecorder.stop();
+        clearInterval(recordingInterval);
+        document.getElementById('voice-recording-bar').classList.add('hidden');
+      }
+    }
+
+    function sendVoiceNoteMessage(audioUrl) {
+      const history = document.getElementById('ai-chat-history');
+      history.innerHTML += `
+        <div class="theme-accent-subtle-bg theme-accent-text p-2.5 rounded-xl ml-4 border theme-accent-border text-right space-y-1">
+          <div class="flex items-center justify-end gap-1.5 text-[10px] font-bold">
+            <i class="fa-solid fa-microphone"></i> <span>Voice Note</span>
+          </div>
+          <audio controls src="${audioUrl}" class="w-full h-8 pt-1"></audio>
+        </div>
+      `;
+      history.scrollTop = history.scrollHeight;
+      reverberateSkyOrb();
+
+      setTimeout(() => {
+        history.innerHTML += `
+          <div class="bg-slate-800 p-2.5 rounded-xl mr-4 theme-custom-text">
+            <strong class="theme-accent-text">${escapeHtml(appData.aiName)}:</strong> Voice note received! I processed your audio message.
+          </div>
+        `;
+        history.scrollTop = history.scrollHeight;
+        reverberateSkyOrb();
+      }, 700);
+    }
+
+    function sendAiMessage() {
+      const input = document.getElementById('ai-user-input');
+      const text = input.value.trim();
+      const media = pendingMediaAttachment;
+
+      if (!text && !media) return;
+
+      const history = document.getElementById('ai-chat-history');
+      let userBubbleHtml = `<div class="theme-accent-subtle-bg theme-accent-text p-2.5 rounded-xl ml-4 border theme-accent-border text-right space-y-1.5">`;
+
+      if (media) {
+        if (media.isImage) {
+          userBubbleHtml += `<img src="${media.dataUrl}" class="max-h-40 rounded-lg mx-auto object-cover border border-slate-700">`;
+        } else if (media.isVideo) {
+          userBubbleHtml += `<video controls src="${media.dataUrl}" class="max-h-40 rounded-lg mx-auto w-full"></video>`;
+        } else if (media.isAudio) {
+          userBubbleHtml += `<audio controls src="${media.dataUrl}" class="w-full h-8"></audio>`;
+        } else {
+          userBubbleHtml += `<div class="p-2 bg-slate-900 rounded-lg text-[10px] font-mono text-left"><i class="fa-solid fa-file mr-1"></i> ${escapeHtml(media.name)}</div>`;
+        }
+      }
+
+      if (text) {
+        userBubbleHtml += `<div>${escapeHtml(text)}</div>`;
+      }
+      userBubbleHtml += `</div>`;
+
+      history.innerHTML += userBubbleHtml;
+      input.value = "";
+      clearMediaAttachment();
+      history.scrollTop = history.scrollHeight;
+
+      reverberateSkyOrb();
+
+      setTimeout(() => {
+        let matchingSnippet = "";
+        let matchedFile = "";
+        const lower = text.toLowerCase();
+        
+        for (let note of appData.notes) {
+          const contentLower = note.content.toLowerCase();
+          const titleLower = note.title.toLowerCase();
+          
+          if (contentLower.includes(lower) || titleLower.includes(lower)) {
+            const sentences = note.content.split(/[.\n;!]+/);
+            const found = sentences.find(s => s.toLowerCase().includes(lower));
+            matchingSnippet = found ? found.trim() : note.content.slice(0, 160) + "...";
+            matchedFile = note.title;
+            break;
+          }
+        }
+
+        let reply = "";
+        if (media) {
+          reply = `I received your ${media.isImage ? "image" : media.isVideo ? "video" : "file"} (<strong>${escapeHtml(media.name)}</strong>)! `;
+        }
+
+        if (matchingSnippet) {
+          reply += `Found in <strong>${escapeHtml(matchedFile)}</strong>: "${escapeHtml(matchingSnippet)}"`;
+        } else if (text) {
+          reply += `I'm analyzing that based on your study materials. Import or write more in your Notes tab to expand my responses!`;
+        }
+
+        history.innerHTML += `
+          <div class="bg-slate-800 p-2.5 rounded-xl mr-4 theme-custom-text">
+            <strong class="theme-accent-text">${escapeHtml(appData.aiName)}:</strong> ${reply}
+          </div>
+        `;
+        history.scrollTop = history.scrollHeight;
+        reverberateSkyOrb();
+      }, 500);
+    }
+
+    /* ==========================================================
+       FOCUS TIMER & MUSIC
+    ========================================================== */
+    function setTimerDuration(mins, modeName) {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerDuration = mins * 60;
+      timerRemaining = timerDuration;
+      updateTimerDisplay();
+      document.getElementById('timer-mode-tag').innerText = modeName;
+      document.getElementById('timer-play-icon').className = 'fa-solid fa-play text-sm';
+    }
+
+    function toggleTimer() {
+      if (timerRunning) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        document.getElementById('timer-play-icon').className = 'fa-solid fa-play text-sm';
+      } else {
+        timerRunning = true;
+        document.getElementById('timer-play-icon').className = 'fa-solid fa-pause text-sm';
+        timerInterval = setInterval(() => {
+          if (timerRemaining > 0) {
+            timerRemaining--;
+            updateTimerDisplay();
+          } else {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            document.getElementById('timer-play-icon').className = 'fa-solid fa-play text-sm';
+            alert("⏰ Timer completed! Take a break.");
+          }
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerRemaining = timerDuration;
+      updateTimerDisplay();
+      document.getElementById('timer-play-icon').className = 'fa-solid fa-play text-sm';
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timerRemaining / 60);
+      const secs = timerRemaining % 60;
+      document.getElementById('timer-display').innerText = 
+        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    async function handleMusicImport(event) {
+      const files = event.target.files;
+      if (!files || files.length === 0) return;
+
+      for (let file of files) {
+        const trackItem = {
+          id: 'track-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6),
+          name: file.name.replace(/\.[^/.]+$/, ""),
+          blob: file,
+          dateAdded: new Date().toISOString()
+        };
+        await saveTrackToIndexedDB(trackItem);
+      }
+
+      await loadTracksFromIndexedDB();
+      event.target.value = '';
+      alert(`Saved ${files.length} song(s) in your offline library!`);
+    }
+
+    function renderPlaylist() {
+      const box = document.getElementById('music-playlist-box');
+      const countLabel = document.getElementById('saved-music-count');
+      if (countLabel) countLabel.innerText = persistentTracks.length;
+      if (!box) return;
+
+      if (!persistentTracks || persistentTracks.length === 0) {
+        box.innerHTML = `<p class="text-[10px] theme-custom-muted text-center py-3">No music imported.<br>Tap '+' above to load your offline songs.</p>`;
+        return;
+      }
+
+      box.innerHTML = persistentTracks.map((t, idx) => `
+        <div class="flex items-center justify-between p-2 rounded-xl bg-slate-900/70 border border-slate-800 text-xs hover:border-slate-600 transition">
+          <div class="flex items-center gap-2 min-w-0 cursor-pointer flex-1" onclick="playTrack(${idx})">
+            <i class="fa-solid fa-play text-[10px] ${currentTrackIndex === idx ? 'theme-accent-text' : 'theme-custom-muted'}"></i>
+            <span class="truncate ${currentTrackIndex === idx ? 'font-bold theme-accent-text' : 'theme-custom-text'}">${escapeHtml(t.name)}</span>
+          </div>
+          <button onclick="removeTrack('${t.id}', ${idx})" class="text-rose-400 p-1 hover:text-rose-300">
+            <i class="fa-solid fa-trash-can text-[11px]"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function playTrack(idx) {
+      if (idx < 0 || idx >= persistentTracks.length) return;
+      currentTrackIndex = idx;
+      const track = persistentTracks[idx];
+
+      const objectUrl = URL.createObjectURL(track.blob);
+      globalAudio.src = objectUrl;
+      globalAudio.play();
+
+      document.getElementById('current-track-name').innerText = track.name;
+      document.getElementById('current-track-status').innerText = "Playing Offline";
+      document.getElementById('audio-play-icon').className = 'fa-solid fa-pause';
+      document.getElementById('music-disc-icon').style.animationPlayState = 'running';
+
+      renderPlaylist();
+    }
+
+    function toggleAudioPlayback() {
+      if (!globalAudio.src && persistentTracks.length > 0) {
+        playTrack(0);
+        return;
+      }
+      if (globalAudio.paused) {
+        globalAudio.play();
+        document.getElementById('audio-play-icon').className = 'fa-solid fa-pause';
+        document.getElementById('music-disc-icon').style.animationPlayState = 'running';
+      } else {
+        globalAudio.pause();
+        document.getElementById('audio-play-icon').className = 'fa-solid fa-play';
+        document.getElementById('music-disc-icon').style.animationPlayState = 'paused';
+      }
+    }
+
+    function onAudioEnded() {
+      if (currentTrackIndex + 1 < persistentTracks.length) {
+        playTrack(currentTrackIndex + 1);
+      } else {
+        document.getElementById('audio-play-icon').className = 'fa-solid fa-play';
+        document.getElementById('music-disc-icon').style.animationPlayState = 'paused';
+      }
+    }
+
+    function updateAudioProgress() {
+      if (!globalAudio.duration) return;
+      const progress = (globalAudio.currentTime / globalAudio.duration) * 100;
+      document.getElementById('audio-progress-bar').value = progress;
+      document.getElementById('audio-time-current').innerText = formatAudioTime(globalAudio.currentTime);
+      document.getElementById('audio-time-total').innerText = formatAudioTime(globalAudio.duration);
+    }
+
+    function seekAudio(percent) {
+      if (!globalAudio.duration) return;
+      globalAudio.currentTime = (percent / 100) * globalAudio.duration;
+    }
+
+    function formatAudioTime(sec) {
+      if (isNaN(sec)) return "0:00";
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${String(s).padStart(2, '0')}`;
+    }
+
+    async function removeTrack(id, idx) {
+      if (currentTrackIndex === idx) {
+        globalAudio.pause();
+        globalAudio.src = "";
+        document.getElementById('current-track-name').innerText = "No track playing";
+        document.getElementById('current-track-status').innerText = "Select track";
+      }
+      await removeTrackFromIndexedDB(id);
+      await loadTracksFromIndexedDB();
+    }
+
+    /* ==========================================================
+       TAB SWITCHING
+    ========================================================== */
+    function toggleAiTab() {
+      if (appData.activeTab === 'ai') {
+        switchTab(previousTab || 'notes');
+      } else {
+        previousTab = appData.activeTab;
+        switchTab('ai');
+      }
+    }
+
+    function switchTab(tabId) {
+      if (appData.activeTab !== 'ai' && tabId === 'ai') {
+        previousTab = appData.activeTab;
+      }
+      appData.activeTab = tabId;
+
+      document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+      const activeEl = document.getElementById(`tab-${tabId}`);
+      if (activeEl) activeEl.classList.remove('hidden');
+
+      // Highlight active bottom nav button
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.style.color = '';
+        btn.className = 'nav-btn theme-custom-muted hover:text-slate-200 flex flex-col items-center gap-1 focus:outline-none flex-1';
+      });
+      const activeNav = document.getElementById(`nav-btn-${tabId}`);
+      if (activeNav) {
+        activeNav.className = 'nav-btn flex flex-col items-center gap-1 focus:outline-none flex-1';
+        activeNav.style.color = appData.accentColor;
+      }
+
+      const floatAiBtn = document.getElementById('floating-ai-btn');
+      if (floatAiBtn) {
+        if (tabId === 'ai') {
+          floatAiBtn.classList.add('hidden');
+        } else {
+          floatAiBtn.classList.remove('hidden');
+        }
+      }
+    }
+
+    /* ==========================================================
+       NOTES MANAGEMENT
+    ========================================================== */
+    function handleFileImport(event) {
+      const files = event.target.files;
+      if (!files || files.length === 0) return;
+
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        const originalName = file.name;
+        const fileExt = originalName.split('.').pop().toUpperCase();
+        const baseTitle = originalName.replace(/\.[^/.]+$/, "");
+        
+        reader.onload = (e) => {
+          appData.notes.unshift({
+            id: "file-" + Date.now() + "-" + Math.random().toString(36).substr(2, 4),
+            title: baseTitle,
+            content: e.target.result,
+            format: fileExt,
+            createdAt: new Date().toISOString()
+          });
+
+          saveStorage();
+          renderNotes();
+        };
+
+        reader.readAsText(file);
+      });
+
+      event.target.value = '';
+    }
+
+    function renderNotes() {
+      const container = document.getElementById('notes-container');
+      const search = document.getElementById('note-search').value.toLowerCase();
+      
+      const filtered = appData.notes.filter(n => {
+        return n.title.toLowerCase().includes(search) || n.content.toLowerCase().includes(search);
+      });
+
+      document.getElementById('stat-notes-count').innerText = appData.notes.length;
+      document.getElementById('file-count-badge').innerText = appData.notes.length;
+      document.getElementById('stat-quiz-score').innerText = appData.quizScore;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 px-4 border border-dashed border-slate-800 rounded-2xl">
+            <i class="fa-solid fa-note-sticky text-2xl theme-custom-muted mb-2"></i>
+            <p class="text-xs font-semibold theme-custom-text">No notes yet</p>
+            <p class="text-[10px] theme-custom-muted mt-1">Tap '+' or import icon above to create study notes.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(n => {
+        const wordCount = (n.content.match(/\S+/g) || []).length;
+        const formatBadge = n.format || "NOTE";
+        return `
+          <div onclick="openNoteEditor('${n.id}')" class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-3.5 cursor-pointer hover:border-slate-500 transition">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-[9px] font-bold theme-accent-text theme-accent-subtle-bg px-2 py-0.5 rounded-full border theme-accent-border">${formatBadge} • ${wordCount} words</span>
+              <span class="text-[9px] theme-custom-muted">${new Date(n.createdAt).toLocaleDateString()}</span>
+            </div>
+            <h3 class="font-bold text-xs theme-custom-text">${escapeHtml(n.title)}</h3>
+            <p class="text-[11px] theme-custom-muted line-clamp-2 mt-1">${escapeHtml(n.content)}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openNoteEditor(id = null) {
+      activeEditingNoteId = id;
+      if (id) {
+        const n = appData.notes.find(x => x.id === id);
+        if (n) {
+          document.getElementById('modal-title-input').value = n.title;
+          document.getElementById('modal-content-input').value = n.content;
+        }
+      } else {
+        document.getElementById('modal-title-input').value = "";
+        document.getElementById('modal-content-input').value = "";
+      }
+      document.getElementById('note-modal').classList.remove('hidden');
+    }
+
+    function closeNoteModal() {
+      document.getElementById('note-modal').classList.add('hidden');
+    }
+
+    function saveCurrentNote() {
+      const title = document.getElementById('modal-title-input').value.trim() || "Untitled Note";
+      const content = document.getElementById('modal-content-input').value;
+
+      if (activeEditingNoteId) {
+        const idx = appData.notes.findIndex(x => x.id === activeEditingNoteId);
+        if (idx !== -1) appData.notes[idx] = { ...appData.notes[idx], title, content };
+      } else {
+        appData.notes.unshift({ 
+          id: "doc-" + Date.now(), 
+          title, 
+          content, 
+          format: "NOTE",
+          createdAt: new Date().toISOString() 
+        });
+      }
+
+      saveStorage();
+      renderNotes();
+      closeNoteModal();
+    }
+
+    function deleteCurrentNote() {
+      if (!activeEditingNoteId) return;
+      appData.notes = appData.notes.filter(x => x.id !== activeEditingNoteId);
+      saveStorage();
+      renderNotes();
+      closeNoteModal();
+    }
+
+    function downloadNotePDF() {
+      const title = document.getElementById('modal-title-input').value.trim() || "Note";
+      const content = document.getElementById('modal-content-input').value;
+      
+      const printWrapper = document.createElement('div');
+      printWrapper.style.padding = '30px';
+      printWrapper.style.color = '#111827';
+      printWrapper.innerHTML = `
+        <h1 style="font-size: 20px; font-weight: bold; margin-bottom: 8px;">${escapeHtml(title)}</h1>
+        <hr style="border:0; border-top: 1px solid #e5e7eb; margin-bottom: 16px;">
+        <div style="line-height: 1.6; font-size: 13px;">${marked.parse(content)}</div>
+      `;
+
+      html2pdf().set({
+        margin: 10,
+        filename: `${title.replace(/[^a-z0-9_-]/gi, '_')}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).from(printWrapper).save();
+    }
+
+    /* ==========================================================
+       QUIZ GENERATION
+    ========================================================== */
+    function generateQuizFromNotes() {
+      if (!appData.notes || appData.notes.length === 0) {
+        alert("Please add notes first.");
+        return;
+      }
+
+      const generated = [];
+      const vocabularyPool = new Set();
+      const sentenceBank = [];
+
+      appData.notes.forEach(note => {
+        const text = note.content || '';
+        const sourceName = note.title;
+
+        const bulletMatches = text.matchAll(/(?:^|\n)(?:[-*•]|\d+\.)?\s*(?:\*\*)?([A-Za-z0-9\s]{3,30})(?:\*\*)?\s*[-:—=]\s*([^\n]{10,200})/g);
+        for (const bm of bulletMatches) {
+          const term = bm[1].trim();
+          const def = bm[2].trim();
+          if (term.length > 2) {
+            vocabularyPool.add(term);
+            sentenceBank.push({ term, def, source: sourceName, isDefinition: true });
+          }
+        }
+
+        const sentences = text.split(/[.\n;!]+/).map(s => s.trim()).filter(s => s.length > 25 && s.length < 180);
+        sentences.forEach(s => {
+          sentenceBank.push({ text: s, source: sourceName, isDefinition: false });
+          const words = s.match(/\b[A-Za-z]{4,}\b/g) || [];
+          words.forEach(w => vocabularyPool.add(w));
+        });
+      });
+
+      const vocabList = Array.from(vocabularyPool);
+
+      sentenceBank.forEach(item => {
+        if (item.isDefinition && item.term && item.def) {
+          const distractors = getDistractors(vocabList, item.term, 3);
+          const options = shuffleArray([item.term, ...distractors]);
+          generated.push({
+            q: `Which concept matches: "${item.def}"?`,
+            options: options,
+            a: options.indexOf(item.term),
+            source: item.source
+          });
+        }
+      });
+
+      if (generated.length === 0) {
+        alert("Add notes with clear concepts and definitions to generate quizzes!");
+        return;
+      }
+
+      generatedQuizBank = shuffleArray(generated).slice(0, 25);
+      currentQuizIndex = 0;
+      updateQuizUI();
+      loadQuizQuestion();
+    }
+
+    function getDistractors(pool, answer, count) {
+      const filtered = pool.filter(w => w.toLowerCase() !== answer.toLowerCase());
+      const shuffled = shuffleArray(filtered);
+      const res = shuffled.slice(0, count);
+      const fallbacks = ["Concept", "Factor", "Principle", "System"];
+      while (res.length < count) {
+        res.push(fallbacks[res.length % fallbacks.length]);
+      }
+      return res;
+    }
+
+    function shuffleArray(arr) {
+      return [...arr].sort(() => Math.random() - 0.5);
+    }
+
+    function updateQuizUI() {
+      const emptyState = document.getElementById('quiz-empty-state');
+      const activeArea = document.getElementById('quiz-active-area');
+      const printBtn = document.getElementById('print-quiz-btn');
+
+      if (generatedQuizBank.length > 0) {
+        emptyState.classList.add('hidden');
+        activeArea.classList.remove('hidden');
+        if (printBtn) printBtn.classList.remove('hidden');
+      } else {
+        emptyState.classList.remove('hidden');
+        activeArea.classList.add('hidden');
+        if (printBtn) printBtn.classList.add('hidden');
+      }
+    }
+
+    function loadQuizQuestion() {
+      if (generatedQuizBank.length === 0) return;
+      const q = generatedQuizBank[currentQuizIndex];
+      document.getElementById('quiz-progress-label').innerText = `Question ${currentQuizIndex + 1} of ${generatedQuizBank.length}`;
+      document.getElementById('quiz-score-label').innerText = `Score: ${appData.quizScore}`;
+      document.getElementById('quiz-source-tag').innerText = q.source || "Note";
+      document.getElementById('game-question').innerText = q.q;
+
+      const optsContainer = document.getElementById('game-options');
+      optsContainer.innerHTML = q.options.map((opt, idx) => `
+        <button onclick="selectQuizOption(${idx})" id="quiz-opt-${idx}" class="w-full bg-slate-900/90 p-2.5 rounded-xl border border-slate-700/80 text-left focus:outline-none hover:border-slate-500 transition">
+          <span class="theme-accent-text mr-1.5 font-mono text-[11px] font-bold">${String.fromCharCode(65 + idx)}.</span>
+          <span class="theme-custom-text">${escapeHtml(opt)}</span>
+        </button>
+      `).join('');
+
+      document.getElementById('quiz-feedback').classList.add('hidden');
+      document.getElementById('next-quiz-btn').classList.add('hidden');
+    }
+
+    function selectQuizOption(idx) {
+      const q = generatedQuizBank[currentQuizIndex];
+      const feedback = document.getElementById('quiz-feedback');
+      feedback.classList.remove('hidden');
+      
+      q.options.forEach((_, i) => {
+        const btn = document.getElementById(`quiz-opt-${i}`);
+        if (btn) btn.disabled = true;
+      });
+
+      if (idx === q.a) {
+        feedback.innerText = "✓ Correct! Directly from your notes.";
+        feedback.className = "text-xs font-semibold theme-accent-text pt-1";
+        appData.quizScore += 10;
+      } else {
+        feedback.innerText = `✗ Correct answer: ${q.options[q.a]}`;
+        feedback.className = "text-xs font-semibold text-rose-400 pt-1";
+      }
+
+      saveStorage();
+      document.getElementById('stat-quiz-score').innerText = appData.quizScore;
+      document.getElementById('quiz-score-label').innerText = `Score: ${appData.quizScore}`;
+      document.getElementById('next-quiz-btn').classList.remove('hidden');
+    }
+
+    function nextQuizQuestion() {
+      currentQuizIndex = (currentQuizIndex + 1) % generatedQuizBank.length;
+      loadQuizQuestion();
+    }
+
+    function printQuiz() {
+      if (generatedQuizBank.length === 0) return;
+      const printWindow = window.open('', '_blank');
+      let html = `<html><head><title>BrainwXves Quiz</title></head><body style="font-family:sans-serif;padding:30px;"><h2>BrainwXves Quiz</h2><ol>`;
+      generatedQuizBank.forEach(item => {
+        html += `<li><strong>${escapeHtml(item.q)}</strong><br>`;
+        item.options.forEach((o, i) => html += `<div style="margin:4px 0 4px 15px;">[ ${String.fromCharCode(65+i)} ] ${escapeHtml(o)}</div>`);
+        html += `</li><br>`;
+      });
+      html += `</ol><script>window.print();<\/script></body></html>`;
+      printWindow.document.write(html);
+      printWindow.document.close();
+    }
+
+    /* ==========================================================
+       THEMING & WALLPAPER
+    ========================================================== */
+    function setWallpaperClass(wpClass) {
+      appData.wallpaper = wpClass;
+      appData.customBgImage = "";
+      saveStorage();
+      applyWallpaper();
+    }
+
+    function resetWallpaper() {
+      appData.wallpaper = "wp-aurora";
+      appData.customBgImage = "";
+      saveStorage();
+      applyWallpaper();
+    }
+
+    function uploadCustomWallpaper(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      compressImage(file, 900, 900, 0.75, (compressedDataUrl) => {
+        appData.customBgImage = compressedDataUrl;
+        saveStorage();
+        applyWallpaper();
+      });
+      e.target.value = '';
+    }
+
+    function applyWallpaper() {
+      const box = document.getElementById('app-wallpaper-box');
+      if (!box) return;
+
+      box.classList.remove('wp-aurora', 'wp-midnight', 'wp-blueprint', 'wp-charcoal', 'wp-velvet');
+      const badge = document.getElementById('wallpaper-status-badge');
+
+      if (appData.customBgImage) {
+        box.style.backgroundImage = `url("${appData.customBgImage}")`;
+        box.style.backgroundSize = 'cover';
+        box.style.backgroundPosition = 'center';
+        if (badge) badge.innerText = "Custom";
+      } else {
+        box.style.backgroundImage = 'none';
+        box.classList.add(appData.wallpaper || 'wp-aurora');
+        if (badge) badge.innerText = (appData.wallpaper || 'Aurora').replace('wp-', '');
+      }
+    }
+
+    function setTextColorPalette(textHex, mutedHex) {
+      appData.textColor = textHex;
+      appData.mutedColor = mutedHex;
+      saveStorage();
+      applyColorAndTheme();
+    }
+
+    function setCustomTextColor(hex) {
+      if (!hex) return;
+      appData.textColor = hex;
+      appData.mutedColor = hexToRgba(hex, 0.65);
+      saveStorage();
+      applyColorAndTheme();
+    }
+
+    function setThemeAccent(primary, hover) {
+      appData.accentColor = primary;
+      appData.accentHover = hover;
+      saveStorage();
+      applyColorAndTheme();
+      applyAppIcon();
+    }
+
+    function setCustomAccentColor(hex) {
+      if (!hex) return;
+      appData.accentColor = hex;
+      appData.accentHover = hex;
+      saveStorage();
+      applyColorAndTheme();
+      applyAppIcon();
+    }
+
+    function applyColorAndTheme() {
+      const root = document.documentElement;
+      root.style.setProperty('--accent-color', appData.accentColor);
+      root.style.setProperty('--accent-hover', appData.accentHover || appData.accentColor);
+      root.style.setProperty('--accent-subtle', hexToRgba(appData.accentColor, 0.16));
+      root.style.setProperty('--accent-border', hexToRgba(appData.accentColor, 0.35));
+      root.style.setProperty('--app-text-color', appData.textColor);
+      root.style.setProperty('--app-muted-color', appData.mutedColor);
+
+      const activeNav = document.getElementById(`nav-btn-${appData.activeTab}`);
+      if (activeNav) activeNav.style.color = appData.accentColor;
+    }
+
+    function hexToRgba(hex, alpha) {
+      let c;
+      if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+        c = hex.substring(1).split('');
+        if (c.length === 3) c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+        c = '0x' + c.join('');
+        return `rgba(${[(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',')},${alpha})`;
+      }
+      return `rgba(248, 250, 252, ${alpha})`;
+    }
+
+    function compressImage(file, maxWidth, maxHeight, quality, callback) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let w = img.width, h = img.height;
+          if (w > h) {
+            if (w > maxWidth) { h = Math.round((h * maxWidth) / w); w = maxWidth; }
+          } else {
+            if (h > maxHeight) { w = Math.round((w * maxHeight) / h); h = maxHeight; }
+          }
+          canvas.width = w; canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          callback(canvas.toDataURL('image/png', quality));
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    /* ==========================================================
+       USER PROFILE, MOTIVATION & DYNAMIC AI LABELS
+    ========================================================== */
+    function initMotivation() {
+      const quotes = [
+        { text: "Knowledge is power when put into practice.", author: "Francis Bacon" },
+        { text: "Small daily efforts create exponential comprehension.", author: "Robin Sharma" },
+        { text: "Live as if you were to die tomorrow. Learn as if to live forever.", author: "Mahatma Gandhi" }
+      ];
+      const pick = quotes[Math.floor(Math.random() * quotes.length)];
+      document.getElementById('daily-quote-text').innerText = `"${pick.text}"`;
+      document.getElementById('daily-quote-author').innerText = `— ${pick.author}`;
+    }
+
+    function renderHeaderAndProfile() {
+      document.getElementById('header-avatar').src = appData.user.avatar;
+      document.getElementById('profile-picture-img').src = appData.user.avatar;
+      document.getElementById('header-user-label').innerText = appData.user.name;
+      document.getElementById('profile-display-name').innerText = appData.user.name;
+      document.getElementById('profile-goal-text').innerText = appData.user.goal;
+      document.getElementById('setting-ai-name').value = appData.aiName;
+      
+      // Update dynamic AI names and placeholders
+      document.getElementById('ai-display-title-name').innerText = appData.aiName;
+      document.getElementById('voice-state-label').innerText = `${appData.aiName} Cloud Voice`;
+      document.getElementById('ai-user-input').placeholder = `Tap a message to ${appData.aiName}...`;
+    }
+
+    function openProfileEditModal() {
+      document.getElementById('edit-name-input').value = appData.user.name;
+      document.getElementById('profile-modal').classList.remove('hidden');
+    }
+
+    function closeProfileEditModal() {
+      document.getElementById('profile-modal').classList.add('hidden');
+    }
+
+    function saveProfileEdit() {
+      const newName = document.getElementById('edit-name-input').value.trim();
+      if (newName) appData.user.name = newName;
+
+      const fileInput = document.getElementById('profile-file-input');
+      if (fileInput.files && fileInput.files[0]) {
+        compressImage(fileInput.files[0], 200, 200, 0.75, (compressed) => {
+          appData.user.avatar = compressed;
+          saveStorage();
+          renderHeaderAndProfile();
+          closeProfileEditModal();
+        });
+      } else {
+        saveStorage();
+        renderHeaderAndProfile();
+        closeProfileEditModal();
+      }
+    }
+
+    function editGoals() {
+      const newGoal = prompt("Update goal:", appData.user.goal);
+      if (newGoal) {
+        appData.user.goal = newGoal;
+        saveStorage();
+        renderHeaderAndProfile();
+      }
+    }
+
+    function saveAiName() {
+      const name = document.getElementById('setting-ai-name').value.trim();
+      if (name) {
+        appData.aiName = name;
+        saveStorage();
+        renderHeaderAndProfile();
+        alert(`Companion named ${appData.aiName}!`);
+      }
+    }
+
+    async function shareSingleNote() {
+      const title = document.getElementById('modal-title-input').value.trim() || "Note";
+      const content = document.getElementById('modal-content-input').value;
+      const textToShare = `${title}\n\n${content}`;
+      if (navigator.share) {
+        try { await navigator.share({ title, text: textToShare }); } catch (e) {}
+      } else {
+        navigator.clipboard.writeText(textToShare);
+        alert("Copied to clipboard!");
+      }
+    }
+
+    function clearAllData() {
+      if (confirm("Wipe all data, notes, and music library?")) {
+        localStorage.removeItem('brainwxves_data_v1');
+        indexedDB.deleteDatabase('BrainwXvesAudioDB');
+        location.reload();
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+  </script>
+</body>
+</html>
